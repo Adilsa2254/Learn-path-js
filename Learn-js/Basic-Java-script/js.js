@@ -9,3 +9,7 @@ function replace2(){
 function ganti_text(){
     document.getElementById('demo').innerHTML='Hallooooo';
 }
+
+function munculkan_date(){
+    document.getElementById('Date').innerHTML=Date();
+}
