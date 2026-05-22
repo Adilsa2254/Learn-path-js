@@ -7,9 +7,23 @@ function replace2(){
 }
 
 function ganti_text(){
-    document.getElementById('demo').innerHTML='Hallooooo';
+    document.getElementById('demo').innerHTML='Hallooooo Hallo saya tampilan ke-2 nihhh!!';
 }
 
 function munculkan_date(){
     document.getElementById('Date').innerHTML=Date();
 }
+
+
+function munculkan_hasil(){
+    let y = document.getElementById('number1');
+    let x = document.getElementById('number2');
+
+    function munculkan_hasil(x, y){
+        let hasil = y + x
+        return hasil; 
+    }
+    
+    document.getElementById('hasil').innerHTML = 'hitung sendiri';
+}
+

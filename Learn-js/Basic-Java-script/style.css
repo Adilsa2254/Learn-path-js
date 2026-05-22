@@ -2,6 +2,15 @@ a{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+.mark{
+    font-family: "Fira Code", "Courier New", Courier, monospace;
+    background-color: #fdfdfd00;
+    color: rgb(255, 45, 45);
+}
+
+p{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 
 .img-box{
     width: 210px;
