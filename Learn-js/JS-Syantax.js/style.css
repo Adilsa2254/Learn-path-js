@@ -1,0 +1,26 @@
+.box-card{
+    margin-top: 10em;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+
+    .card-link{
+        color: rgb(212, 212, 212);
+        text-decoration: none;
+        padding: 1em;
+        background-color: black;
+        border-radius: 10px;
+        transition: all ease-in-out 0.2s;
+    }
+}
+.card-link:hover{
+    transform: translateY(-7px);
+}
+
+.mark{
+    font-family: "Fira Code", "Courier New", Courier, monospace;
+    background-color: #fdfdfd00;
+    color: rgb(255, 45, 45);
+}

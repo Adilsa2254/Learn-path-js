@@ -1,0 +1,17 @@
+.rounded{
+    width: 120px;
+    height: 180px;
+}
+
+/* Fix navbar position */
+.navbar {
+    width: 100%;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Prevent content from being hidden behind fixed navbar */
+body {
+    padding-top: 70px;
+}
