@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resep Pilihan Minggu Ini | Culinary Insights</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter & Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8; 
+        }
+        
+        /* Modal Transition Animation */
+        .modal-enter {
+            opacity: 0;
+            transform: scale(0.95) translateY(10px);
+        }
+        .modal-enter-active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+        .modal-exit {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        .modal-exit-active {
+            opacity: 0;
+            transform: scale(0.95) translateY(10px);
+            transition: opacity 200ms ease-in, transform 200ms ease-in;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased selection:bg-brand-500 selection:text-white">
+
+    <nav class="fixed w-full z-40 glass-effect border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-2">
+                    <i class="ph-fill ph-cooking-pot text-brand-600 text-3xl"></i>
+                    <span class="font-serif font-semibold text-2xl tracking-tight text-gray-900">Dapur<span class="text-brand-600">Insight</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#" class="text-gray-900 font-medium hover:text-brand-600 transition">Rekomendasi</a>
+                    <a href="#" class="text-gray-500 font-medium hover:text-brand-600 transition">Artikel</a>
+                    <a href="#" class="text-gray-500 font-medium hover:text-brand-600 transition">Tentang Kami</a>
+                </div>
+                <div>
+                    <button class="bg-gray-900 hover:bg-gray-800 text-white px-5 py-2.5 rounded-full font-medium transition shadow-md hover:shadow-lg text-sm flex items-center gap-2">
+                        <i class="ph ph-bookmark-simple"></i> Simpan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-32 pb-20 lg:pt-40 lg:pb-28 overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-10 pointer-events-none">
+            <svg class="absolute w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <path d="M0,0 C30,40 70,60 100,0 L100,100 L0,100 Z" fill="currentColor" class="text-brand-600"></path>
+            </svg>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <span class="inline-block py-1 px-3 rounded-full bg-brand-50 text-brand-600 font-semibold text-xs tracking-wider uppercase mb-5 border border-brand-100 shadow-sm">
+                Edisi Terbatas • Minggu Ini
+            </span>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif font-semibold text-gray-900 mb-6 leading-tight">
+                Eksplorasi Rasa <br class="hidden md:block" />
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-emerald-400">Penyegar Suasana</span>
+            </h1>
+            <p class="mt-4 max-w-2xl text-lg text-gray-600 mx-auto leading-relaxed mb-10">
+                Tinggalkan rutinitas menu yang membosankan. Kami telah mengkurasi 5 resep terbaik yang wajib Anda coba minggu ini untuk mengembalikan semangat di meja makan Anda.
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="#recipes" class="bg-brand-600 hover:bg-brand-500 text-white px-8 py-3.5 rounded-full font-medium transition shadow-lg shadow-brand-500/30 flex items-center gap-2">
+                    Mulai Memasak <i class="ph ph-arrow-down"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main id="recipes" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
+            <h2 class="text-3xl font-serif font-semibold text-gray-900">Kurasi Resep</h2>
+            
+            <!-- Category Filters -->
+            <div class="flex bg-white p-1.5 rounded-full shadow-sm border border-gray-200 overflow-x-auto max-w-full hide-scroll">
+                <button onclick="filterRecipes('semua')" id="btn-semua" class="filter-btn active bg-gray-900 text-white px-5 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap">Semua</button>
+                <button onclick="filterRecipes('sarapan')" id="btn-sarapan" class="filter-btn text-gray-600 hover:text-gray-900 px-5 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap">Sarapan</button>
+                <button onclick="filterRecipes('makan-utama')" id="btn-makan-utama" class="filter-btn text-gray-600 hover:text-gray-900 px-5 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap">Makan Utama</button>
+                <button onclick="filterRecipes('hidangan-penutup')" id="btn-hidangan-penutup" class="filter-btn text-gray-600 hover:text-gray-900 px-5 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap">Penutup</button>
+            </div>
+        </div>
+
+        <div id="recipe-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Recipe Cards will be injected here by JavaScript -->
+        </div>
+    </main>
+
+    <!-- Modal Backdrop -->
+    <div id="modal-backdrop" class="fixed inset-0 bg-gray-900/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" onclick="closeModal()"></div>
+    
+    <!-- Modal Content -->
+    <div id="recipe-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-6 pointer-events-none">
+        <div class="bg-white w-full max-w-4xl max-h-[90vh] rounded-3xl shadow-2xl flex flex-col md:flex-row overflow-hidden pointer-events-auto transform scale-95 opacity-0 transition-all duration-300" id="modal-panel">
+            
+            <!-- Modal Image Side -->
+            <div class="w-full md:w-2/5 h-64 md:h-auto relative bg-gray-100">
+                <img id="modal-image" src="" alt="Recipe" class="absolute inset-0 w-full h-full object-cover">
+                <button onclick="closeModal()" class="md:hidden absolute top-4 right-4 bg-white/80 backdrop-blur text-gray-900 p-2 rounded-full shadow-sm">
+                    <i class="ph ph-x text-xl"></i>
+                </button>
+                <div class="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent">
+                    <span id="modal-badge" class="bg-brand-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"></span>
+                </div>
+            </div>
+
+            <!-- Modal Content Side -->
+            <div class="w-full md:w-3/5 flex flex-col h-full max-h-[60vh] md:max-h-[90vh] overflow-y-auto bg-white">
+                <div class="p-6 md:p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 id="modal-title" class="text-3xl font-serif font-semibold text-gray-900 leading-tight"></h3>
+                        <button onclick="closeModal()" class="hidden md:block text-gray-400 hover:text-gray-900 bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition">
+                            <i class="ph ph-x text-xl"></i>
+                        </button>
+                    </div>
+                    
+                    <p id="modal-desc" class="text-gray-600 mb-6 leading-relaxed"></p>
+                    
+                    <div class="flex gap-4 mb-8">
+                        <div class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl text-sm font-medium text-gray-700">
+                            <i class="ph ph-clock text-brand-600 text-lg"></i>
+                            <span id="modal-time"></span>
+                        </div>
+                        <div class="flex items-center gap-2 bg-gray-50 px-4 py-2 rounded-xl text-sm font-medium text-gray-700">
+                            <i class="ph ph-chart-bar text-brand-600 text-lg"></i>
+                            <span id="modal-difficulty"></span>
+                        </div>
+                    </div>
+
+                    <div class="space-y-8">
+                        <!-- Ingredients -->
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                                <i class="ph ph-list-bullets text-brand-500"></i> Bahan-bahan
+                            </h4>
+                            <ul id="modal-ingredients" class="space-y-3 text-gray-600">
+                                <!-- Ingredients injected here -->
+                            </ul>
+                        </div>
+
+                        <!-- Instructions -->
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                                <i class="ph ph-cooking-pot text-brand-500"></i> Cara Membuat
+                            </h4>
+                            <ol id="modal-steps" class="space-y-4 text-gray-600">
+                                <!-- Steps injected here -->
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="flex items-center justify-center gap-2 mb-6">
+                <i class="ph-fill ph-cooking-pot text-brand-500 text-3xl"></i>
+                <span class="font-serif font-semibold text-2xl tracking-tight">Dapur<span class="text-brand-500">Insight</span></span>
+            </div>
+            <p class="text-gray-400 max-w-md mx-auto mb-8">Eksplorasi rasa baru setiap minggunya. Temukan kebahagiaan di dapur Anda sendiri.</p>
+            <div class="flex justify-center gap-6 text-gray-400">
+                <a href="#" class="hover:text-brand-500 transition"><i class="ph ph-instagram-logo text-2xl"></i></a>
+                <a href="#" class="hover:text-brand-500 transition"><i class="ph ph-twitter-logo text-2xl"></i></a>
+                <a href="#" class="hover:text-brand-500 transition"><i class="ph ph-youtube-logo text-2xl"></i></a>
+            </div>
+            <p class="text-gray-500 text-sm mt-8">&copy; 2023 DapurInsight. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data Resep
+        const recipes = [
+            {
+                id: 1,
+                title: "Salmon Panggang Lemon Herb",
+                category: "makan-utama",
+                badge: "Kaya Omega-3",
+                time: "25 Menit",
+                difficulty: "Mudah",
+                image: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?auto=format&fit=crop&q=80&w=800",
+                desc: "Hidangan sehat, ringan, dan penuh cita rasa segar. Kombinasi salmon yang lembut dengan perasan lemon dan rempah pilihan memberikan sensasi makan malam ala restoran di rumah.",
+                ingredients: [
+                    "2 potong fillet ikan salmon segar",
+                    "2 sdm minyak zaitun (olive oil)",
+                    "3 siung bawang putih, cincang halus",
+                    "1 buah lemon, ambil air perasan dan parutan kulitnya",
+                    "1 sdm rosemary atau peterseli segar, cincang",
+                    "Garam laut dan lada hitam tumbuk kasar secukupnya",
+                    "Asparagus untuk pelengkap (opsional)"
+                ],
+                steps: [
+                    "Keringkan fillet salmon menggunakan tisu dapur. Pastikan salmon dalam suhu ruang sebelum dimasak.",
+                    "Dalam mangkuk kecil, campurkan minyak zaitun, bawang putih cincang, parutan kulit lemon, rempah cincang, garam, dan lada.",
+                    "Baluri permukaan salmon dengan campuran bumbu tersebut secara merata.",
+                    "Panaskan wajan anti lengket atau teflon dengan api sedang. Panggang salmon dengan bagian kulit di bawah terlebih dahulu selama 4-5 menit hingga kulit krispi.",
+                    "Balik salmon perlahan, panggang sisi lainnya selama 3-4 menit tergantung tingkat kematangan yang diinginkan.",
+                    "Sesaat sebelum diangkat, peras air lemon di atasnya. Sajikan selagi hangat."
+                ]
+            },
+            {
+                id: 2,
+                title: "Smoothie Bowl Buah Naga",
+                category: "sarapan",
+                badge: "Booster Energi",
+                time: "10 Menit",
+                difficulty: "Sangat Mudah",
+                image: "https://images.unsplash.com/photo-1628557044797-f21a177c37ec?auto=format&fit=crop&q=80&w=800",
+                desc: "Awali hari dengan mangkuk smoothie yang menyegarkan ini. Kaya akan antioksidan, vitamin, dan warna pink cerah yang dijamin membuat mood langsung naik.",
+                ingredients: [
+                    "1 buah naga merah beku, potong dadu",
+                    "1 buah pisang ambon beku",
+                    "100 ml susu almond atau yoghurt plain",
+                    "1 sdm madu atau sirup maple (opsional)",
+                    "Topping: Granola, chia seeds, potongan kelapa, dan strawberry"
+                ],
+                steps: [
+                    "Masukkan buah naga beku, pisang beku, susu almond, dan madu ke dalam blender.",
+                    "Blend hingga teksturnya sangat halus dan kental. Jika terlalu cair, tambahkan es batu atau buah beku lagi.",
+                    "Tuang smoothie ke dalam mangkuk saji.",
+                    "Susun topping (granola, chia seeds, buah segar) di atasnya dengan rapi.",
+                    "Nikmati segera selagi dingin."
+                ]
+            },
+            {
+                id: 3,
+                title: "Pasta Pesto Jamur Truffle",
+                category: "makan-utama",
+                badge: "Comfort Food",
+                time: "20 Menit",
+                difficulty: "Menengah",
+                image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&q=80&w=800",
+                desc: "Hidangan pasta mewah yang bisa dibuat dalam sekejap. Saus pesto basil segar dipadukan dengan wangi khas minyak truffle dan jamur panggang.",
+                ingredients: [
+                    "250g pasta (Spaghetti atau Fettuccine)",
+                    "150g jamur kancing, iris tipis",
+                    "4 sdm saus pesto botolan (atau buat sendiri dari basil segar)",
+                    "1 sdt minyak truffle (truffle oil)",
+                    "2 siung bawang putih, memarkan",
+                    "Keju parmesan parut secukupnya",
+                    "Garam dan lada hitam"
+                ],
+                steps: [
+                    "Rebus pasta dalam air mendidih yang sudah diberi banyak garam hingga al dente. Sisihkan 1 cangkir air rebusan pasta sebelum ditiriskan.",
+                    "Panaskan sedikit minyak di wajan, tumis bawang putih hingga harum, lalu masukkan irisan jamur. Masak hingga jamur kecokelatan.",
+                    "Kecilkan api, masukkan pasta yang sudah ditiriskan ke dalam wajan beserta saus pesto.",
+                    "Aduk rata. Jika terlalu kering, tambahkan sedikit air rebusan pasta hingga saus membalut pasta dengan sempurna.",
+                    "Matikan api, teteskan minyak truffle dan aduk perlahan (minyak truffle akan hilang aromanya jika dimasak terlalu panas).",
+                    "Sajikan dengan taburan keju parmesan segar di atasnya."
+                ]
+            },
+            {
+                id: 4,
+                title: "Matcha Panna Cotta",
+                category: "hidangan-penutup",
+                badge: "Dessert Viral",
+                time: "15 Menit + Chilling",
+                difficulty: "Menengah",
+                image: "https://images.unsplash.com/photo-1598215439218-f79b4ed187f5?auto=format&fit=crop&q=80&w=800",
+                desc: "Pencuci mulut khas Italia yang lembut seperti sutra, diberikan sentuhan bubuk teh hijau Jepang (Matcha). Perpaduan pahit manis yang elegan.",
+                ingredients: [
+                    "2 sdt gelatin bubuk, larutkan dengan 2 sdm air dingin",
+                    "250 ml heavy cream (krim kental)",
+                    "150 ml susu cair full cream",
+                    "50g gula pasir (sesuaikan selera)",
+                    "1 sdm bubuk matcha kualitas premium, ayak",
+                    "1 sdt ekstrak vanila",
+                    "Strawberry segar untuk hiasan"
+                ],
+                steps: [
+                    "Biarkan gelatin mengembang dalam air dingin selama 5 menit.",
+                    "Dalam panci kecil, campurkan heavy cream, susu, dan gula. Panaskan dengan api kecil-sedang (jangan sampai mendidih kencang).",
+                    "Ambil sedikit cairan panas tersebut, campurkan dengan bubuk matcha di mangkuk kecil hingga tidak ada yang menggumpal. Masukkan kembali ke dalam panci.",
+                    "Setelah campuran susu panas (tapi tidak mendidih), matikan api. Masukkan gelatin yang sudah mengembang dan ekstrak vanila. Aduk hingga gelatin benar-benar larut.",
+                    "Saring campuran tersebut agar teksturnya sangat halus. Tuang ke dalam cetakan atau gelas saji kecil.",
+                    "Dinginkan di dalam kulkas minimal 4 jam hingga set.",
+                    "Sajikan dingin dengan potongan strawberry segar."
+                ]
+            },
+            {
+                id: 5,
+                title: "Avocado Toast Telur Rebus",
+                category: "sarapan",
+                badge: "Trend Sehat",
+                time: "15 Menit",
+                difficulty: "Mudah",
+                image: "https://images.unsplash.com/photo-1541519227354-08fa5d50c44d?auto=format&fit=crop&q=80&w=800",
+                desc: "Klasik, cepat, dan mengenyangkan. Roti panggang gandum dengan alpukat tumbuk berbumbu dan telur rebus setengah matang yang meleleh sempurna.",
+                ingredients: [
+                    "2 lembar roti gandum tebal (sourdough lebih baik)",
+                    "1 buah alpukat matang",
+                    "2 butir telur ayam omega",
+                    "1 sdt air perasan jeruk lemon",
+                    "Chili flakes (cabai bubuk kasar)",
+                    "Garam laut dan lada hitam",
+                    "Sedikit mentega untuk memanggang roti"
+                ],
+                steps: [
+                    "Rebus telur: Didihkan air, masukkan telur perlahan, rebus selama persis 6 menit. Angkat dan segera rendam di air es. Kupas perlahan.",
+                    "Panggang roti gandum di atas teflon yang sudah diolesi sedikit mentega hingga kecoklatan dan renyah.",
+                    "Belah alpukat, ambil dagingnya. Tumbuk kasar dengan garpu, campurkan air lemon, garam, dan lada.",
+                    "Oleskan alpukat tumbuk di atas roti panggang yang masih hangat.",
+                    "Belah telur rebus setengah matang, letakkan di atas olesan alpukat.",
+                    "Taburi dengan chili flakes, sedikit garam laut ekstra, dan lada hitam. Sajikan."
+                ]
+            }
+        ];
+
+        
+        // Element References
+        const grid = document.getElementById('recipe-grid');
+        const modalBackdrop = document.getElementById('modal-backdrop');
+        const modal = document.getElementById('recipe-modal');
+        const modalPanel = document.getElementById('modal-panel');
+
+        // Function to render recipe cards
+        function renderRecipes(filter = 'semua') {
+            grid.innerHTML = '';
+            
+            const filteredRecipes = filter === 'semua' 
+                ? recipes 
+                : recipes.filter(r => r.category === filter);
+
+            filteredRecipes.forEach((recipe, index) => {
+                // Determine animation delay based on index
+                const delay = index * 100;
+                
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 cursor-pointer group`;
+                card.style.animation = `fadeInUp 0.5s ease forwards ${delay}ms`;
+                card.style.opacity = '0';
+                card.onclick = () => openModal(recipe.id);
+
+                card.innerHTML = `
+                    <div class="relative h-56 overflow-hidden">
+                        <img src="${recipe.image}" alt="${recipe.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-white/90 backdrop-blur text-brand-600 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm uppercase tracking-wider">
+                                ${recipe.badge}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-4 text-xs font-medium text-gray-500 mb-3">
+                            <span class="flex items-center gap-1"><i class="ph ph-clock text-brand-500"></i> ${recipe.time}</span>
+                            <span class="flex items-center gap-1"><i class="ph ph-chart-bar text-brand-500"></i> ${recipe.difficulty}</span>
+                        </div>
+                        <h3 class="text-xl font-serif font-bold text-gray-900 mb-2 group-hover:text-brand-600 transition-colors">${recipe.title}</h3>
+                        <p class="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-4">${recipe.desc}</p>
+                        <div class="flex items-center text-brand-600 font-medium text-sm gap-1 group-hover:gap-2 transition-all">
+                            Lihat Resep <i class="ph ph-arrow-right"></i>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Add custom animation styles to document
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Function to handle category filtering styling
+        function filterRecipes(category) {
+            // Update button styles
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('bg-gray-900', 'text-white');
+                btn.classList.add('text-gray-600', 'hover:text-gray-900');
+            });
+            
+            const activeBtn = document.getElementById(`btn-${category}`);
+            activeBtn.classList.remove('text-gray-600', 'hover:text-gray-900');
+            activeBtn.classList.add('bg-gray-900', 'text-white');
+
+            // Render recipes
+            renderRecipes(category);
+        }
+
+        // Functions for Modal Handling
+        function openModal(id) {
+            const recipe = recipes.find(r => r.id === id);
+            if (!recipe) return;
+
+            // Populate data
+            document.getElementById('modal-image').src = recipe.image;
+            document.getElementById('modal-badge').innerText = recipe.badge;
+            document.getElementById('modal-title').innerText = recipe.title;
+            document.getElementById('modal-desc').innerText = recipe.desc;
+            document.getElementById('modal-time').innerText = recipe.time;
+            document.getElementById('modal-difficulty').innerText = recipe.difficulty;
+
+            // Populate ingredients
+            const ingList = document.getElementById('modal-ingredients');
+            ingList.innerHTML = '';
+            recipe.ingredients.forEach(ing => {
+                const li = document.createElement('li');
+                li.className = 'flex gap-3 text-sm';
+                li.innerHTML = `<i class="ph ph-check-circle text-brand-500 text-lg flex-shrink-0"></i> <span>${ing}</span>`;
+                ingList.appendChild(li);
+            });
+
+            // Populate steps
+            const stepList = document.getElementById('modal-steps');
+            stepList.innerHTML = '';
+            recipe.steps.forEach((step, idx) => {
+                const li = document.createElement('li');
+                li.className = 'flex gap-4 text-sm';
+                li.innerHTML = `
+                    <div class="flex-shrink-0 w-6 h-6 rounded-full bg-brand-100 text-brand-600 flex items-center justify-center font-bold text-xs">
+                        ${idx + 1}
+                    </div>
+                    <span class="pt-0.5 leading-relaxed">${step}</span>
+                `;
+                stepList.appendChild(li);
+            });
+
+            // Show Modal with animations
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            
+            modalBackdrop.classList.remove('hidden');
+            modal.classList.remove('hidden');
+            
+            // Small delay to allow display:block to apply before animating opacity/transform
+            setTimeout(() => {
+                modalBackdrop.classList.remove('opacity-0');
+                modalPanel.classList.remove('scale-95', 'opacity-0');
+            }, 10);
+        }
+
+        function closeModal() {
+            // Animate out
+            modalBackdrop.classList.add('opacity-0');
+            modalPanel.classList.add('scale-95', 'opacity-0');
+            
+            // Hide after animation finishes
+            setTimeout(() => {
+                modalBackdrop.classList.add('hidden');
+                modal.classList.add('hidden');
+                document.body.style.overflow = ''; // Restore scrolling
+            }, 300); // 300ms matches Tailwind duration-300
+        }
+
+        // Close modal on Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                closeModal();
+            }
+        });
+
+        // Initial Render
+        renderRecipes();
+
+    </script>
+</body>
+</html>
